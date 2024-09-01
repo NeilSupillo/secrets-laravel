@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    /**
-     * Show the dashboard main view.
-     */
+
     public function index(Request $request)
     {
         // Get the currently authenticated user
@@ -20,75 +18,47 @@ class DashboardController extends Controller
         $secrets = Secret::where('user_id', $user->id)->get();
 
         // Pass the secrets to the dashboard view
-        dd($secrets->toArray());
+        return view('secrets-components.dashboard', ['secrets' => $secrets, 'user' => $request->user()]);
     }
 
-    /**
-     * Show a detailed view of a specific dashboard section.
-     */
-    public function show(Request $request, $id)
-    {
-        // Retrieve specific data based on the provided ID
-        $sectionData = []; // Example: Retrieve section data based on ID
 
-        // Return a view with the detailed section data
-        return view('dashboard.show', compact('sectionData'));
-    }
-
-    /**
-     * Handle a form submission or other post request in the dashboard.
-     */
-    public function store(Request $request)
-    {
-        // Validate and handle the request data
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-        ]);
-
-        // Logic to save the data, e.g., creating a new post or updating settings
-
-        // Redirect or return a response
-        return redirect()->route('dashboard.index')->with('success', 'Data saved successfully.');
-    }
-
-    /**
-     * Show the form for editing a specific dashboard item.
-     */
-    public function edit($id)
-    {
-        // Retrieve the specific item to edit based on ID
-        $item = []; // Example: Retrieve item data
-
-        // Return the edit form view with the item data
-        return view('dashboard.edit', compact('item'));
-    }
-
-    /**
-     * Update the specified item in the dashboard.
-     */
     public function update(Request $request, $id)
     {
-        // Validate and handle the request data
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
+
+        // Validate the request data
+        $request->validate([
+            'secret' => 'required|string|max:255',
         ]);
 
-        // Logic to update the item in the database
+        // Find the secret by ID and ensure it's associated with the current user
+        $secret = Secret::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
 
-        // Redirect or return a response
-        return redirect()->route('dashboard.index')->with('success', 'Item updated successfully.');
+        // Update the secret
+        $secret->secret = $request->input('secret');
+        $secret->save();
+
+        // Redirect or return a response, e.g., back to the dashboard with a success message
+        return redirect()->route('dashboard')->with('status', 'Secret updated successfully');
     }
 
-    /**
-     * Delete a specific item from the dashboard.
-     */
     public function destroy($id)
     {
-        // Logic to delete the item based on ID
+        // Find the secret by ID and ensure it belongs to the authenticated user
+        $secret = Secret::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
 
-        // Redirect or return a response
-        return redirect()->route('dashboard.index')->with('success', 'Item deleted successfully.');
+        // Delete the secret
+        $secret->delete();
+
+        // Redirect back with a success message
+        return redirect()->route('dashboard')->with('status', 'Secret deleted successfully.');
+    }
+
+    public function show(Request $request, $id)
+    {
+        // Find the secret by ID and ensure it belongs to the authenticated user
+        $secret = Secret::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+
+        // Pass the secret to the view
+        return view('secrets-components.show', ['secret' => $secret, 'user' => $request->user()]);
     }
 }

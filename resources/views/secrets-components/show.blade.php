@@ -21,11 +21,11 @@
     <div class="text-center">
         <div class="container">
 
-            <h1 class="">Read Some of User's Secrets!</h1>
+            <h1 class="">User's Secrets!</h1>
 
-            @foreach ($secrets as $secret)
-                <p class="secret-text rounded-sm">{{ $secret->secret }}</p>
-            @endforeach
+            {{-- user secret, using the show method --}}
+            <p class="secret-text rounded-sm">{{ $secret->secret }}</p>
+
 
             <hr />
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Secret;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SecretController extends Controller
 {
@@ -12,25 +13,25 @@ class SecretController extends Controller
      */
     public function index()
     {
-        $secrets = Secret::all();
+        $secrets = Secret::orderBy('created_at', 'desc')->get();
 
         return view('secrets-components.home', ['secrets' => $secrets]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'secret' => 'required|string|max:255', // Adjust the max length as needed
+        ]);
+
+        // Create the secret and associate it with the authenticated user
+        Secret::create([
+            'secret' => $request->input('secret'),
+            'user_id' => Auth::id(), // Associate with the authenticated user
+        ]);
+        return redirect('/');
     }
 
     /**
@@ -40,29 +41,5 @@ class SecretController extends Controller
 
     {
         dd($secret);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }
