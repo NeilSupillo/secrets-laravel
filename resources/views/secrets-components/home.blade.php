@@ -20,16 +20,17 @@
 
     <div class="text-center">
         <div class="container">
-
             <h1 class="">Read Some of User's Secrets!</h1>
 
             @foreach ($secrets as $secret)
-                <p class="secret-text rounded-sm">{{ $secret->secret }}</p>
+                <form action="{{ url('/secret/' . $secret->id) }}" method="GET" class="secret-form">
+                    @csrf
+                    <p class="secret-text rounded-sm pointer" onclick="this.parentNode.submit();">{{ $secret->secret }}
+                    </p>
+                </form>
             @endforeach
 
             <hr />
-
-
         </div>
     </div>
     @guest

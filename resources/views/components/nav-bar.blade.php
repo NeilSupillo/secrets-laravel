@@ -16,7 +16,8 @@
         @else
             <div class="hamburger-menu">
                 <div class="hamburger-icon" onclick="toggleMenu()">
-                    <a class="btn btn-md" role="button">Neil ⌄</a>
+                    <a class="btn btn-md" role="button">{{ Auth::user()->name }} ▼</a>
+
                 </div>
                 <div class="menu-links">
 
@@ -33,7 +34,8 @@
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <a onclick="event.preventDefault();
+                            <a class="pointer"
+                                onclick="event.preventDefault();
                             this.closest('form').submit();">Log
                                 Out</a>
                         </form>

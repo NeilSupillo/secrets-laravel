@@ -67,3 +67,6 @@
     margin: auto;
     max-width: 250px;
 }
+.pointer {
+    cursor: pointer;
+}

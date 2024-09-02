@@ -52,13 +52,4 @@ class DashboardController extends Controller
         // Redirect back with a success message
         return redirect()->route('dashboard')->with('status', 'Secret deleted successfully.');
     }
-
-    public function show(Request $request, $id)
-    {
-        // Find the secret by ID and ensure it belongs to the authenticated user
-        $secret = Secret::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
-
-        // Pass the secret to the view
-        return view('secrets-components.show', ['secret' => $secret, 'user' => $request->user()]);
-    }
 }

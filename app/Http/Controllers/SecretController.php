@@ -37,9 +37,12 @@ class SecretController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Secret $secret)
-
+    public function show($id)
     {
-        dd($secret);
+        // Retrieve the specific secret by ID
+        $secret = Secret::findOrFail($id);
+
+        // Pass the secret to a view to display it
+        return view('secrets-components.show', ['secret' => $secret]);
     }
 }

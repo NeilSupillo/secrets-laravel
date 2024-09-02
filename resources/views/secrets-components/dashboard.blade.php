@@ -214,14 +214,15 @@
                     @endforeach
                 </div>
             </div>
-        @endif
-        <div class="logout-back flex justify-evenly mt-4">
-            <a class="btn btn-dark logout bg-grey text-white px-4 py-2 rounded" href="{{ url('/') }}"
-                role="button">
-                Add another Secret
-            </a>
-        </div>
+            <div class="logout-back flex justify-evenly mt-4">
+                <a class="btn btn-dark logout bg-grey text-white px-4 py-2 rounded" href="{{ url('/') }}"
+                    role="button">
+                    Add another Secret
+                </a>
+            </div>
     </div>
+    @endif
+
 
 </x-layout>
 
