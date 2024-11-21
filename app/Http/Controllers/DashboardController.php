@@ -18,7 +18,7 @@ class DashboardController extends Controller
         $secrets = Secret::where('user_id', $user->id)->get();
 
         // Pass the secrets to the dashboard view
-        return view('secrets-components.dashboard', ['secrets' => $secrets, 'user' => $request->user()]);
+        return view('secrets-components.dashboard', ['secrets' => $secrets]);
     }
 
 

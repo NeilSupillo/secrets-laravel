@@ -27,7 +27,8 @@
     transition: all 0.3 ease-in-out;
 }
 
-.menu-links li {
+.menu-links li,
+.error li {
     list-style: none;
 }
 .menu-links a {

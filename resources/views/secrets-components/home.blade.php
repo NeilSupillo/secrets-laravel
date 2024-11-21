@@ -7,7 +7,8 @@
                 <form id="secret-form" action="/submit" method="POST">
                     @csrf
                     <div class="form-group">
-                        <textarea id="secret" class="form-control text-center" name="secret" placeholder="What's your secret?" rows="1"></textarea>
+                        <textarea id="secret" class="form-control text-center" name="secret" placeholder="What's your secret?" rows="1"
+                            required></textarea>
                     </div>
                     <button type="submit" class="btn btn-dark">Submit</button>
                 </form>

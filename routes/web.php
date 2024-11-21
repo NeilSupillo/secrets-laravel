@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [SecretController::class, 'index']);
 Route::get('/home', function () {
-    return view('secrets-components.index');
+    return ('secrets-components.index');
 });
 
 Route::post('/submit', [SecretController::class, 'store']);
